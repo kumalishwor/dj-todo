@@ -1,1 +1,1 @@
-docker-compose exec app python manage.py migrate
+docker-compose -f ./compose/docker-compose.yml exec app python manage.py migrate

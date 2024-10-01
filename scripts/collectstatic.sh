@@ -1,2 +1,2 @@
 #!/bin/sh
-docker-compose exec app python manage.py collectstatic --noinput
+docker-compose -f ./compose/docker-compose.yml exec app python manage.py collectstatic --noinput

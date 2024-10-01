@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 
 # Install dependencies
-COPY requirements.txt .
+COPY requirements.txt ./
 RUN pip install --upgrade pip
 RUN apk add --update --no-cache postgresql-client
 RUN apk add --update --no-cache --virtual .tmp-build-apps gcc libc-dev linux-headers postgresql-dev
@@ -20,8 +20,12 @@ RUN apk del .tmp-build-apps
 # RUN mkdir /app
 WORKDIR /app
 COPY . /app/
-COPY ./entrypoint.sh /
-ENTRYPOINT [ "sh", "/entrypoint.sh" ]
+
+# Set the correct permissions to the file
+RUN chmod +x /app/entrypoint.sh
+
+# Set the entrypoint to run the shell script
+ENTRYPOINT ["/app/entrypoint.sh"]
 
 # Command to run the application
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "todowoo.wsgi:application"]
