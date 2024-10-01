@@ -20,6 +20,11 @@ RUN apk del .tmp-build-apps
 # RUN mkdir /app
 WORKDIR /app
 COPY . /app/
+COPY ./entrypoint.sh /
+ENTRYPOINT [ "sh", "/entrypoint.sh" ]
+
+# Command to run the application
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "todowoo.wsgi:application"]
 
 RUN adduser -D user
 USER user
